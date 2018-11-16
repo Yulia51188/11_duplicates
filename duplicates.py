@@ -28,9 +28,7 @@ def find_duplicates(directory):
     for file_index, path_list in filename_dict.items():
         if len(path_list) > 1:
             duplicate_dict[file_index] = path_list
-    if len(duplicate_dict) > 0:
-        return duplicate_dict
-    return None
+    return duplicate_dict
 
 
 def print_duplicates(duplicates_dictionary):
@@ -46,6 +44,6 @@ if __name__ == '__main__':
     if not os.path.isdir(args.directory):
         exit("The specified directory doesn't exist!")
     duplicates = find_duplicates(args.directory)
-    if duplicates is None:
+    if not duplicates:
         exit('There are no duplicates in the directory')
     print_duplicates(duplicates)
