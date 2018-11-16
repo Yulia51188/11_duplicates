@@ -1,6 +1,5 @@
 import argparse
 import os
-from collections import Counter
 
 
 def parse_arguments():
@@ -18,21 +17,21 @@ def parse_arguments():
 def find_duplicates(directory):
     file_tree = os.walk(directory)
     filename_dict = {}
-    print(type(filename_dict))
     for address, dirs, files in file_tree:
         for filename in files:
             filepath = os.path.join(address, filename)
-            if filename in filename_dict:
-                filename_dict[filename].append(filepath) 
-            else
-        filename_dict[filename] = filepath
+            filesize = os.path.getsize(filepath)
+            file_index = (filename, filesize)
+            if file_index in filename_dict:
+                filename_dict[file_index].append(filepath)
+            else:
+                filename_dict[file_index] = [filepath]
     duplicate_dict = {}
-    for filename, path_list in filename_dict:
+    for file_index, path_list in filename_dict.items():
         if len(path_list) > 1:
-            duplicate_dict[filename] = path_list
-    print(duplicate_dict)
-    
-    return None
+            duplicate_dict[file_index] = path_list
+    return duplicate_dict
+
 
 if __name__ == '__main__':
     args = parse_arguments()
@@ -41,7 +40,11 @@ if __name__ == '__main__':
     duplicates = find_duplicates(args.directory)
     if duplicates is None:
         exit('There are no duplicates in the directory')
-    for filename, path_list in duplicates:
-        print('{filename}:'.format(filename))
+    print(duplicates)
+    for fileindex, path_list in duplicates.items():
+        filename, filesize = fileindex
+        print('{name}, file size is {size} bytes:'.format(name=filename,
+                                                          size=filesize))
         for filepath in path_list:
             print(filepath)
+        print()
