@@ -1,7 +1,7 @@
 import argparse
 import os
 import collections
-import itertools
+
 
 def parse_arguments():
     parser = argparse.ArgumentParser(
