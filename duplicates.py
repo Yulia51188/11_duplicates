@@ -40,7 +40,6 @@ if __name__ == '__main__':
     duplicates = find_duplicates(args.directory)
     if duplicates is None:
         exit('There are no duplicates in the directory')
-    print(duplicates)
     for fileindex, path_list in duplicates.items():
         filename, filesize = fileindex
         print('{name}, file size is {size} bytes:'.format(name=filename,
